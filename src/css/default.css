@@ -1,0 +1,71 @@
+*{margin: 0;padding: 0;}   /*初始化*/
+*{box-sizing: border-box;}  /*改变盒模型*/
+*::after{box-sizing: border-box;}
+*::before{box-sizing: border-box;}
+ul,ol{ list-style: none; }
+a{color: inherit;text-decoration: none;}
+
+body{
+    font-size: 12px;   /*12px  14px  16px */
+    line-height: 1.5;
+}
+
+/* layout */
+
+.page{
+    display: flex;    /*flex布局默认左右布局*/    
+    height: 100vh;    
+}
+.page > aside{
+    width:200px;
+}
+.page > main{
+    flex-grow: 1;
+    border:1px solid green;
+}
+
+/*aside*/
+
+.page > aside {
+    display: flex;
+    flex-direction: column;
+}
+
+.newSong{
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #333;
+}
+.newSong.active{
+    background: #d4d4d4;
+}
+.songList{
+    text-align: left;
+    flex-grow: 1;
+}
+.songList>li{
+    border-bottom: 1px solid #ddd;
+    padding:10px ;
+    margin-left: 10px;
+}
+.songList>li.active{
+    background: #d4d4d4;
+}
+.uploadArea{}
+.draggable{
+    text-align: center;
+    padding: 20px;
+    border-radius: 4px;
+    border: 2px dashed #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    flex-direction: column;
+    
+}
+.clickable{
+    cursor: pointer;
+    width:200px;
+    
+}
