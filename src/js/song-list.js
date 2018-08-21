@@ -19,7 +19,8 @@
             })
         },
         clearActive(){
-            $(this.el).find('.actvie').removeClass('.active')
+            $(this.el).find('.active').removeClass('active')
+        
         },
         activeItem(li){
             let $li = $(li)
@@ -72,13 +73,15 @@
            })
         },
         bindEventHub(){
-            window.eventHub.on('upload',()=>{
-                this.view.clearActive()
-            })
             window.eventHub.on('create',(songData)=>{
                 this.model.data.songs.push(songData)
                 this.view.render(this.model.data)
             })
+            window.eventHub.on('new',()=>{
+                this.view.clearActive()
+            })
+            
+            
         },
     }
     controller.init(view,model)
