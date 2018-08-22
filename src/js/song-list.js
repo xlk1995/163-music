@@ -9,9 +9,11 @@
         render(data){
             let $el = $(this.el)
             $el.html(this.template)
-            let {songs} = data 
+            let {songs,selectSongId} = data 
             let liList = songs.map((songs)=>{
-                return $('<li></li>').text(songs.name).attr('data-song-id',songs.id)
+                let $li=$('<li></li>').text(songs.name).attr('data-song-id',songs.id)
+                if(selectSongId===songs.id){$li.addClass('active')}
+                return $li
             })
             $el.find('ul').empty()
             liList.map((domLi)=>{
@@ -22,16 +24,13 @@
             $(this.el).find('.active').removeClass('active')
         
         },
-        activeItem(li){
-            let $li = $(li)
-            $li.addClass('active')
-                .siblings('.active').removeClass('active')
         
-        }
     }
     let model = {
-        data:{songs:[
-        ]},
+        data:{
+            songs:[ ],
+            selectSongId:undefined
+        },
         find(){
             var query = new AV.Query('Song');
             return query.find().then((songs)=>{
@@ -59,8 +58,12 @@
         },
         bindEvents(){
             $(this.view.el).on('click','li',(e)=>{
-                this.view.activeItem(e.currentTarget)
+            
                 let songId = e.currentTarget.getAttribute('data-song-id')
+
+                this.model.data.selectSongId = songId
+                this.view.render(this.model.data)
+
                 let data 
                 let songs = this.model.data.songs
                 for(let i=0;i<songs.length;i++){
@@ -81,6 +84,15 @@
                 this.view.clearActive()
             })
             
+            window.eventHub.on('update',(song)=>{
+                let songs = this.model.data.songs
+                for(let i = 0;i<songs.length;i++){
+                    if(songs[i].id === song.id){
+                        Object.assign(songs[i],song)
+                    }
+                }
+                this.view.render(this.model.data)
+            })
             
         },
     }
