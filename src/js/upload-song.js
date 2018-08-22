@@ -7,7 +7,9 @@
        
         } 
     
-    let model = {}
+    let model = {
+        data:{status:'open'}
+    }
     let controller = {
         init(view,model){
             this.view = view
@@ -37,14 +39,21 @@
                        // 文件添加进队列后,处理相关的事情
                    });
                },
-               'BeforeUpload': function(up, file) {
+               'BeforeUpload': (up, file)=> {
                        // 每个文件上传前,处理相关的事情
                        window.eventHub.emit('beforeUpload')
+                       if(this.model.data.status === 'close'){
+                           return false
+                       }else{
+                        this.model.data.status === 'close' 
+                        return true
+                       }
+                       
                },
                'UploadProgress': function(up, file) {
                   
                },
-               'FileUploaded': function(up, file, info) {
+               'FileUploaded': (up, file, info) =>{
                    
                        // 每个文件上传成功后,处理相关的事情
                        // 其中 info.response 是文件上传成功后，服务端返回的json，形式如
@@ -64,6 +73,7 @@
                        
 
                        window.eventHub.emit('afterUpload')
+                       this.model.data.status = 'open'
               },
                'Error': function(up, err, errTip) {
                        //上传出错时,处理相关的事情
