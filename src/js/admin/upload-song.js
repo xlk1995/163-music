@@ -70,6 +70,10 @@
                             url:sourceLink,
                             name:response.key
                         })
+                        console.log('链接')
+                        console.log(sourceLink)
+                        console.log('歌名')
+                        console.log(response.key)
                        
 
                        window.eventHub.emit('afterUpload')
