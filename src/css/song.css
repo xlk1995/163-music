@@ -34,7 +34,7 @@
 
 .song-description{
 	flex-grow: 1;
-	color: #AEABAC;
+    color: #AEABAC;
 	text-align: center;
 	line-height: 2;
 	margin-top: 20px;
@@ -48,11 +48,11 @@
 	line-height: 24px;
 }
 .song-description .lines{
-	transition: transform 0.3s;
+    transition: transform 0.3s;
 }
-.song-description .lyric{
-	height: 72px;
-	overflow: hidden;
+.song-description .lyric {
+    height: 72px;
+    overflow: hidden;
 }
 .song-description p.active{
 	color: white;

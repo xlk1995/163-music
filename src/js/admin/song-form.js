@@ -32,13 +32,19 @@
                     </label>
                     <input name="cover" type="text" value="__cover__">
                 </div>
+                <div class="row">
+                    <label>
+                        歌词
+                    </label>
+                    <textarea cols=100 rows=10 name="lyrics">__lyrics__</textarea>
+                </div>
                 <div class="row actions">
                     <button>保存</button>
                 </div>
             </form>
         `,
         render(data={}){
-            let placehoders = ['name','singer','url','id','cover']
+            let placehoders = ['name','singer','url','id','cover','lyrics']
             let html = this.template
             placehoders.map((string)=>{
                 html = html.replace(`__${string}__`,data[string] || '')
@@ -60,7 +66,8 @@
             singer:'',
             url:'',
             id:'',
-            cover:''
+            cover:'',
+            lyrics:'',
         },
         create(data){
             // 声明类型
@@ -72,6 +79,7 @@
             song.set('singer',data.singer)
             song.set('url',data.url)
             song.set('cover',data.cover)
+            song.set('lyrics',data.lyrics)
             // 设置优先级
             return song.save().then( (newSong)=> {
                 let {id ,attributes} = newSong
@@ -92,6 +100,7 @@
             song.set('singer', data.singer)
             song.set('url', data.url)
             song.set('cover', data.cover)
+            song.set('lyrics',data.lyrics)
             // 保存到云端
             return song.save().then((response)=>{
                 Object.assign(this.data,data)
@@ -112,7 +121,7 @@
             })
             window.eventHub.on('new',(data)=>{
                     if(this.model.data.id){
-                        this.model.data = {name:'',url:'',singer:'',id:'',cover:''}
+                        this.model.data = {name:'',url:'',singer:'',id:'',cover:'',lyrics:''}
                     }else{
                         Object.assign(this.model.data,data)
                     }
@@ -120,7 +129,7 @@
             })
         },
         create(){
-            let needs = 'name singer url cover'.split(' ')
+            let needs = 'name singer url cover lyrics'.split(' ')
             let data = {}
             needs.map((string)=>{
                 data[string]=
@@ -135,7 +144,7 @@
                 })
         },
         update(){
-            let needs = 'name singer url cover'.split(' ')
+            let needs = 'name singer url cover lyrics'.split(' ')
             let data = {}
             needs.map((string)=>{
                 data[string]=
